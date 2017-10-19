@@ -10,7 +10,7 @@ Bar_char barc;
 Line_char linec;
 
 void setup(){
-  size(800,600);
+  size(800,700);
   surface.setResizable(true);
   lines = loadStrings("./data.csv");
   headers = split(lines[0], ",");
@@ -31,13 +31,56 @@ void setup(){
 void draw(){
   canvas2_w = 0.2 * width;
   canvas1_w = 0.8 * width;
+
+void axis(){
+  // add the x-axis names
+  for(int i=0;i<names.length; i++){   
+    pushMatrix();
+    translate(barc.rects.get(i).x, barc.rects.get(i).y+10);
+    rotate(radians(45));
+    fill(0);
+    text(names[i], 0,0);
+    popMatrix(); 
+  }
+  
+  // add the y-axis lines
+  float temp = height-y_frame;
+  int y_mark = 0; 
+  while(temp >= 0.1*height){
+    line(x_frame, temp, width-x_frame+20-canvas2_w, temp);
+    fill(0);
+    text(Integer.toString(y_mark*10), x_frame-0.045*canvas1_w, temp);
+    y_mark ++;
+    temp -= y_gap;
+  }  
+  
+  line(x_frame, height-y_frame, x_frame, temp);
+  // add the x-y-labels
+  fill(25,25,112); text(headers[0], canvas1_w/2, height*0.99);
+  pushMatrix();
+  translate(0.025*canvas1_w, 0.5*height);
+  rotate(radians(270));
+  text(headers[1], 0,0);
+  popMatrix(); 
+}
+
+void draw(){  
+  canvas2_w = 0.2*width;
+  canvas1_w = 0.8*width;
   x_frame = canvas1_w*0.1;
   y_frame = height*0.1;
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
-  //barc.arrange(); 
-  linec.arrange();
-  for(Line l: linec.lines){
-    l.draw();
+  barc.arrange(); 
+  //linec.arrange();
+  //for(Line l: linec.lines) l.draw();
+  barc.arrange();
+  axis();
+  for(Rect r:barc.rects){
+    r.draw();  
+    if(r.show_data){
+      fill(0);
+      text(r.data,r.x, r.y+r.hgt-10);
+    }
   }
 }
