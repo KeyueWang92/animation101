@@ -20,10 +20,10 @@ class Line_char{
     width_bar = 0.65*0.8*canvas1_w/names.length;
     gap = 0.35*0.8*canvas1_w/names.length;
     for(Line l:lines){
-      l.x1 = x_frame+ l.index*gap + l.index*width_bar/2;
-      l.y1 = -height*0.8*l.value1/Y_range;
-      l.x2 = l.x1 + gap + width_bar/2;
-      l.y2 = -height*0.8*l.value2/Y_range;
+      l.x1 = x_frame+ (l.index+1)*gap + (l.index+1)*width_bar/2;
+      l.y1 = height - y_frame- height*0.8*l.value1/Y_range;
+      l.x2 = l.x1 + gap + width_bar;
+      l.y2 = height - y_frame - height*0.8*l.value2/Y_range;
     }
   }
 }
