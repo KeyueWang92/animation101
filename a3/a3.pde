@@ -7,6 +7,7 @@ int Y_range = 0;
 float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
+Line_char linec;
 
 void setup(){
   size(800,700);
@@ -23,12 +24,13 @@ void setup(){
       Y_range = values[i-1];
     }
   }
-  printArray(headers);
-  printArray(names);
-  printArray(values);
-  print(Y_range);
   barc = new Bar_char(names, values);
+  linec = new Line_char(names, values);
 }
+
+void draw(){
+  canvas2_w = 0.2 * width;
+  canvas1_w = 0.8 * width;
 
 void axis(){
   // add the x-axis names
@@ -51,8 +53,8 @@ void axis(){
     y_mark ++;
     temp -= y_gap;
   }  
-  line(x_frame, height-y_frame, x_frame, temp);
   
+  line(x_frame, height-y_frame, x_frame, temp);
   // add the x-y-labels
   fill(25,25,112); text(headers[0], canvas1_w/2, height*0.99);
   pushMatrix();
@@ -69,6 +71,9 @@ void draw(){
   y_frame = height*0.1;
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
+  barc.arrange(); 
+  //linec.arrange();
+  //for(Line l: linec.lines) l.draw();
   barc.arrange();
   axis();
   for(Rect r:barc.rects){
