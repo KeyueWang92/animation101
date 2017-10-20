@@ -29,7 +29,6 @@ class Bar_char{
       hgt_reduce[i] = -r.hgt/30;
       i++;
     }
-    //printArray(hgt_reduce);
   }
   
   String b_draw(String state){

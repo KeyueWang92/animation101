@@ -33,6 +33,7 @@ void setup(){
 }
 
 void axis(){
+  stroke(0);
   textAlign(LEFT);
   textSize(12);
   // add the x-axis names
@@ -81,8 +82,9 @@ void draw(){
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
   buttons.bdraw();
   state = barc.b_draw(state);
-  //state = linec.l_draw(state);
+  state = linec.l_draw(state);
 }
+
 void mouseClicked(){
   String next = buttons.buttonClicked();
   if(state == "BAR"){
