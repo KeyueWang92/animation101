@@ -18,8 +18,8 @@ class Bar_char{
   }
   
   void arrange(){ 
-    width_bar = 0.65*0.8*canvas1_w/names.length;
-    gap = 0.35*0.8*canvas1_w/names.length;
+    //width_bar = 0.65*0.8*canvas1_w/names.length;
+    //gap = 0.35*0.8*canvas1_w/names.length;
     int i = 0;
     for(Rect r:rects){
       r.x = x_frame+ (i+1)*gap + i*width_bar;
@@ -38,6 +38,8 @@ class Bar_char{
         r.draw();  
         if(r.show_data){
           fill(0);
+          textSize(13);
+          textAlign(CENTER, CENTER);
           text(r.data,r.x, r.y+r.hgt-10);
         }
       }
@@ -99,7 +101,6 @@ class Bar_char{
       }
       j++;
     }
-    
     if(all_shrinked == rects.size()){
       this.r_dot();
     }

@@ -13,13 +13,10 @@ class Line_char{
     for(int i=0; i<names.length - 1; i++){
       Line l= new Line(i, values[i], values[i+1]);
       lines.add(l);
-      println(values[i+1]);
     }
   }
   
-  void arrange(){
-    fill(255);
-    rect(0, 0, canvas1_w, height);    
+  void arrange(){  
     width_bar = 0.65*0.8*canvas1_w/names.length;
     gap = 0.35*0.8*canvas1_w/names.length;
     for(Line l:lines){
@@ -33,18 +30,18 @@ class Line_char{
   }
  
   String l_draw(String state){
-    barc.arrange();
+    
     if(state == "PRELINE"){
+      this.arrange();
       if (lines.get(0).c1 != 75) {
-        this.arrange();
         preline();
         return "PRELINE";
       }
       else {
-        return "Line_to_Bar";
+        return "LINE";
       }
     }
-    if(state == "LINE"){
+    else if(state == "LINE"){
       this.arrange();
       for(Line l:this.lines){
         l.c1 = 75;
@@ -69,8 +66,8 @@ class Line_char{
   
   void preline() {
     for (Line l: lines) {
-      l.c1 = l.c1-2;
-      l.c2 = l.c2-1;
+      l.c1 = l.c1-6;
+      l.c2 = l.c2-4;
       l.draw();
       l.draw_dot();
     }
@@ -80,19 +77,20 @@ class Line_char{
   void fade(){
     if (this.lines.get(0).c1 < 255) {
       for (Line l: lines) {
-        l.c1 = l.c1+2;
-        l.c2 = l.c2+1;
+        l.c1 = l.c1+6;
+        l.c2 = l.c2+4;
         l.draw();
         l.draw_dot();
       }
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } else {
-      if (a <= 5) {
+      if (a <= 2.5) {
         for (Line l: lines) {
           l.draw_dot();
-          l.y += 0.2;
+          l.y += 0.5;
         }
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
-        a += 0.2;
+        a += 0.5;
       } else {
         fill(75,150,255);
         for (Line l: lines) {

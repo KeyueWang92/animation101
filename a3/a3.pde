@@ -33,6 +33,7 @@ void setup(){
 }
 
 void axis(){
+  println("axis");
   stroke(0);
   textAlign(LEFT);
   textSize(12);
@@ -74,11 +75,11 @@ void draw(){
   y_frame = height*0.1;
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
+  barc.width_bar = 0.65*0.8*canvas1_w/names.length;
+  barc.gap = 0.35*0.8*canvas1_w/names.length;
   fill(255);
   rect(0, 0, canvas1_w, height);
-  //linec.arrange();
   axis();
-  //for(Line l: linec.lines) l.draw();
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
   buttons.bdraw();
   state = barc.b_draw(state);
@@ -87,6 +88,7 @@ void draw(){
 
 void mouseClicked(){
   String next = buttons.buttonClicked();
+
   if(state == "BAR"){
     if(next == "LINE"){
       state = "Bar_to_Line";
