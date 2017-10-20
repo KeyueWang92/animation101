@@ -91,20 +91,17 @@ void mouseClicked(){
     }else if(next == "PIE"){
       state = "Bar_to_Pie";
     }
-    print(state);
   }else if(state == "LINE"){
     if(next == "BAR"){
       state = "Line_to_Bar";
     }else if(next == "PIE"){
       state = "Line_to_Pie";
     }
-    print(state);
   }else if(state == "PIE"){
     if(next == "BAR"){
       state = "Pie_to_Bar";
     }else if(next == "LINE"){
       state = "Pie_to_Line";
     }
-    print(state);
   }
 }
