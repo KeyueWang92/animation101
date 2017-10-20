@@ -29,7 +29,6 @@ class Bar_char{
       hgt_reduce[i] = -r.hgt/30;
       i++;
     }
-    printArray(hgt_reduce);
   }
   String b_draw(String state){
     if(state == "BAR"){
@@ -47,7 +46,8 @@ class Bar_char{
         r.draw();
       }
       if(finish){
-        return "BAR";
+        finish = false;
+        return "PRELINE";
       }else{
         this.fade();
         return "Bar_to_Line";

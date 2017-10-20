@@ -8,10 +8,9 @@ float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
 Line_char linec;
-public String state = "BAR";
+public String state = "PRELINE";
 
 void setup(){
-  frameRate(4);
   size(800,700);
   surface.setResizable(true);
   lines = loadStrings("./data.csv");
@@ -31,6 +30,7 @@ void setup(){
 }
 
 void axis(){
+  stroke(0);
   // add the x-axis names
   for(int i=0;i<names.length; i++){   
     pushMatrix();
@@ -70,9 +70,9 @@ void draw(){
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
   fill(255);
-  rect(0, 0, canvas1_w, height);   
-  state = barc.b_draw(state);
-  //linec.arrange();
+  rect(0, 0, canvas1_w, height); 
+  barc.arrange();
   axis();
-  //for(Line l: linec.lines) l.draw();
+  state = barc.b_draw(state);
+  state = linec.l_draw(state);
 }
