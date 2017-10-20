@@ -4,6 +4,9 @@ class Bar_char{
   String[] names;
   int[] values;
   ArrayList<Rect> rects = new ArrayList<Rect>();
+  boolean finish = false;
+  float[] hgt_reduce;
+  
   Bar_char(String[] names, int[] values){
     this.names = names;
     this.values = values;
@@ -11,11 +14,10 @@ class Bar_char{
       Rect r= new Rect(Integer.toString(values[i]),names[i]);
       rects.add(r);
     }
+    this.hgt_reduce = new float[names.length];
   }
   
-  void arrange(){
-    fill(255);
-    rect(0, 0, canvas1_w, height);    
+  void arrange(){ 
     width_bar = 0.65*0.8*canvas1_w/names.length;
     gap = 0.35*0.8*canvas1_w/names.length;
     int i = 0;
@@ -24,7 +26,67 @@ class Bar_char{
       r.y = height-y_frame;
       r.wid = width_bar;
       r.hgt = -height*0.8*values[i]/Y_range;
+      hgt_reduce[i] = -r.hgt/30;
       i++;
     }
+    printArray(hgt_reduce);
   }
+  String b_draw(String state){
+    if(state == "BAR"){
+      this.arrange();
+      for(Rect r:barc.rects){
+        r.draw();  
+        if(r.show_data){
+          fill(0);
+          text(r.data,r.x, r.y+r.hgt-10);
+        }
+      }
+      return "Bar_to_Line";
+    }else if(state == "Bar_to_Line"){
+      for(Rect r:barc.rects){
+        r.draw();
+      }
+      if(finish){
+        return "BAR";
+      }else{
+        this.fade();
+        return "Bar_to_Line";
+      }
+    }
+    return state;
+  }
+  
+  void fade(){
+    int j=0;
+    int all_shrinked = 0;
+    for(Rect r:rects){
+      if(r.hgt >= -5){
+        //r.y = height-y_frame -10;
+        r.hgt = -5;
+        all_shrinked++;
+      }else{     
+        r.y = r.y - hgt_reduce[j];
+        r.hgt = r.hgt + hgt_reduce[j];
+        //println(r.y);
+      }
+      j++;
+    }
+    
+    if(all_shrinked == rects.size()){
+      this.r_dot();
+    }
+  }
+  
+  void r_dot(){
+    for(Rect r:rects){
+      if(r.wid <=5){
+        r.wid = 5;
+        finish = true;
+      }else{
+        r.x += 1;
+        r.wid -= 2;
+      }
+    }
+  }
+
 }
