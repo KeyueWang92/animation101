@@ -8,8 +8,10 @@ float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
 Line_char linec;
+public String state = "BAR";
 
 void setup(){
+  frameRate(4);
   size(800,700);
   surface.setResizable(true);
   lines = loadStrings("./data.csv");
@@ -28,15 +30,11 @@ void setup(){
   linec = new Line_char(names, values);
 }
 
-void draw(){
-  canvas2_w = 0.2 * width;
-  canvas1_w = 0.8 * width;
-
 void axis(){
   // add the x-axis names
   for(int i=0;i<names.length; i++){   
     pushMatrix();
-    translate(barc.rects.get(i).x, barc.rects.get(i).y+10);
+    translate(x_frame+ (i+1)*barc.gap + i*barc.width_bar, height-y_frame+10);
     rotate(radians(45));
     fill(0);
     text(names[i], 0,0);
@@ -64,23 +62,17 @@ void axis(){
   popMatrix(); 
 }
 
-void draw(){  
+void draw(){ 
   canvas2_w = 0.2*width;
   canvas1_w = 0.8*width;
   x_frame = canvas1_w*0.1;
   y_frame = height*0.1;
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
-  barc.arrange(); 
+  fill(255);
+  rect(0, 0, canvas1_w, height);   
+  state = barc.b_draw(state);
   //linec.arrange();
-  //for(Line l: linec.lines) l.draw();
-  barc.arrange();
   axis();
-  for(Rect r:barc.rects){
-    r.draw();  
-    if(r.show_data){
-      fill(0);
-      text(r.data,r.x, r.y+r.hgt-10);
-    }
-  }
+  //for(Line l: linec.lines) l.draw();
 }
