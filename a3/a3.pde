@@ -8,11 +8,12 @@ float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
 Line_char linec;
-public String state = "BAR";
+Button buttons;
+String state = "BAR";
 
 void setup(){
-  frameRate(4);
-  size(800,700);
+  frameRate(10);
+  size(1000,600);
   surface.setResizable(true);
   lines = loadStrings("./data.csv");
   headers = split(lines[0], ",");
@@ -28,9 +29,12 @@ void setup(){
   }
   barc = new Bar_char(names, values);
   linec = new Line_char(names, values);
+  buttons  = new Button();
 }
 
 void axis(){
+  textAlign(LEFT);
+  textSize(12);
   // add the x-axis names
   for(int i=0;i<names.length; i++){   
     pushMatrix();
@@ -70,9 +74,37 @@ void draw(){
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
   fill(255);
-  rect(0, 0, canvas1_w, height);   
-  state = barc.b_draw(state);
+  rect(0, 0, canvas1_w, height);
   //linec.arrange();
   axis();
   //for(Line l: linec.lines) l.draw();
+  buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
+  buttons.bdraw();
+  state = barc.b_draw(state);
+  //state = linec.l_draw(state);
+}
+void mouseClicked(){
+  String next = buttons.buttonClicked();
+  if(state == "BAR"){
+    if(next == "LINE"){
+      state = "Bar_to_Line";
+    }else if(next == "PIE"){
+      state = "Bar_to_Pie";
+    }
+    print(state);
+  }else if(state == "LINE"){
+    if(next == "BAR"){
+      state = "Line_to_Bar";
+    }else if(next == "PIE"){
+      state = "Line_to_Pie";
+    }
+    print(state);
+  }else if(state == "PIE"){
+    if(next == "BAR"){
+      state = "Pie_to_Bar";
+    }else if(next == "LINE"){
+      state = "Pie_to_Line";
+    }
+    print(state);
+  }
 }
