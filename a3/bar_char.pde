@@ -29,8 +29,9 @@ class Bar_char{
       hgt_reduce[i] = -r.hgt/30;
       i++;
     }
-    printArray(hgt_reduce);
+    //printArray(hgt_reduce);
   }
+  
   String b_draw(String state){
     if(state == "BAR"){
       this.arrange();
@@ -41,21 +42,50 @@ class Bar_char{
           text(r.data,r.x, r.y+r.hgt-10);
         }
       }
-      return "Bar_to_Line";
+      return state;
     }else if(state == "Bar_to_Line"){
-      for(Rect r:barc.rects){
-        r.draw();
-      }
       if(finish){
-        return "BAR";
+        finish = false;
+        return "PRELINE";
       }else{
+        for(Rect r:barc.rects){
+          r.draw();
+        }
         this.fade();
         return "Bar_to_Line";
+      }
+    }else if(state == "Bar_to_Pie"){
+    }else if(state == "PREBAR"){
+      if(finish){
+        finish = false;
+        return "BAR";
+      }else{
+        this.grow();
+        for(Rect r:rects){
+          r.draw();
+        }
+        return "PREBAR";
       }
     }
     return state;
   }
-  
+  void grow(){
+    int j=0;
+    int all_grown=0;
+    for(Rect r:rects){
+      if(-r.hgt >= int(r.data)){
+        r.hgt = -int(r.data);
+        all_grown++;
+      }else{
+        r.y = r.y + hgt_reduce[j];
+        r.hgt = r.hgt - hgt_reduce[j];
+      }
+      j++;
+    }
+    if(all_grown == rects.size()){
+      finish = true;
+    }
+  }
   void fade(){
     int j=0;
     int all_shrinked = 0;
@@ -67,7 +97,6 @@ class Bar_char{
       }else{     
         r.y = r.y - hgt_reduce[j];
         r.hgt = r.hgt + hgt_reduce[j];
-        //println(r.y);
       }
       j++;
     }
