@@ -3,7 +3,7 @@ class Pie_char{
   float ratio, start_angle, end_angle;
   int num_slices;
   float x, y;
-  String[] names; int[] values;
+  String[] names; float[] values;
   //used for record the right ending position
   ArrayList<Slice> slices = new ArrayList<Slice>();
   //used for animations
@@ -11,7 +11,7 @@ class Pie_char{
   boolean finish = false;
   float[] arc_reduce;
   
-  Pie_char(String[] names, int[] values){
+  Pie_char(String[] names, float[] values){
     this.names = names;
     this.values = values;
     x = 0.8*width/2;
@@ -81,7 +81,19 @@ class Pie_char{
         }
         return "Bar_to_Pie";
       }
-    }else if(state == "bar_PREPIE"){
+    }else if(state == "Line_to_Pie"){
+      if(finish){
+        finish = false;
+        return "PIE";
+      }else{
+        this.grow();
+        for(Slice s:ss){
+          s.draw(0);
+        }
+        return "Line_to_Pie";
+      }
+    }
+    else if(state == "bar_PREPIE"){
       
     }
     return state;
