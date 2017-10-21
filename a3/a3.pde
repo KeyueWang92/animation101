@@ -38,6 +38,8 @@ void setup(){
 }
 
 void axis(){
+  println("axis");
+  stroke(0);
   textAlign(LEFT);
   textSize(12);
   // add the x-axis names
@@ -78,8 +80,11 @@ void draw(){
   y_frame = height*0.1;
   y_len = 0.8*height;
   y_gap = 10*y_len/Y_range;
+  barc.width_bar = 0.65*0.8*canvas1_w/names.length;
+  barc.gap = 0.35*0.8*canvas1_w/names.length;
   fill(255);
   rect(0, 0, canvas1_w, height);
+
   //if(!(state == "PIE" || state == "PREPIE")){
   if(state != "PIE"){
     axis();
@@ -89,9 +94,12 @@ void draw(){
   state = barc.b_draw(state);
   //state = linec.l_draw(state);
   state = piec.p_draw(state);
+
 }
+
 void mouseClicked(){
   String next = buttons.buttonClicked();
+
   if(state == "BAR"){
     barc.arrange();piec.arrange();
     if(next == "LINE"){

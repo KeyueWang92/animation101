@@ -21,8 +21,8 @@ class Bar_char{
   }
   
   void arrange(){ 
-    width_bar = 0.65*0.8*canvas1_w/names.length;
-    gap = 0.35*0.8*canvas1_w/names.length;
+    //width_bar = 0.65*0.8*canvas1_w/names.length;
+    //gap = 0.35*0.8*canvas1_w/names.length;
     int i = 0;
     for(Rect r:rects){
       //set rects to the right location
@@ -33,6 +33,7 @@ class Bar_char{
       hgt_reduce[i] = -r.hgt/30;
       i++;
     }
+
     // set transation rects to the top point
     i=0;
     for(Rect r:tran_rects){  
@@ -165,7 +166,6 @@ class Bar_char{
       }
       j++;
     }
-    
     if(all_shrinked == rects.size()){
       this.r_dot();
     }
