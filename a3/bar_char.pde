@@ -4,6 +4,7 @@ class Bar_char{
   String[] names;
   float[] values;
   ArrayList<Rect> rects = new ArrayList<Rect>();
+  ArrayList<Rect> tran_rects = new ArrayList<Rect>();
   boolean finish = false;
   float[] hgt_reduce;
   
@@ -11,8 +12,12 @@ class Bar_char{
     this.names = names;
     this.values = values;
     for(int i=0; i<names.length; i++){
+
       Rect r= new Rect(Float.toString(values[i]),names[i]);
+      Rect r1= new Rect(Integer.toString(values[i]),names[i]);
+
       rects.add(r);
+      tran_rects.add(r1);
     }
     this.hgt_reduce = new float[names.length];
   }
@@ -22,6 +27,7 @@ class Bar_char{
     //gap = 0.35*0.8*canvas1_w/names.length;
     int i = 0;
     for(Rect r:rects){
+      //set rects to the right location
       r.x = x_frame+ (i+1)*gap + i*width_bar;
       r.y = height-y_frame;
       r.wid = width_bar;
@@ -29,18 +35,29 @@ class Bar_char{
       hgt_reduce[i] = -r.hgt/30;
       i++;
     }
+
+    // set transation rects to the top point
+    i=0;
+    for(Rect r:tran_rects){  
+      r.wid = width_bar;
+      r.hgt = -1;        
+      r.x = x_frame+ (i+1)*gap + i*width_bar;
+      r.y = height-y_frame - height*0.8*values[i]/Y_range - r.hgt;
+      i++;
+    }
   }
   
   String b_draw(String state){
     if(state == "BAR"){
+      finish = false;
       this.arrange();
-      for(Rect r:barc.rects){
+      for(Rect r:rects){
         r.draw();  
         if(r.show_data){
           fill(0);
           textSize(13);
           textAlign(CENTER, CENTER);
-          text(r.data,r.x, r.y+r.hgt-10);
+          text(r.data,r.x+width_bar/2, r.y+r.hgt-10);
         }
       }
       return state;
@@ -56,26 +73,76 @@ class Bar_char{
         return "Bar_to_Line";
       }
     }else if(state == "Bar_to_Pie"){
+      if(finish){
+        finish = false;
+        return "PIE";
+      }else{
+        for(Rect r:barc.rects){
+          r.draw();
+        }
+        //this.to_line();
+        this.fade();
+        return "Bar_to_Pie";
+      }
     }else if(state == "PREBAR"){
       if(finish){
         finish = false;
         return "BAR";
       }else{
-        this.grow();
-        for(Rect r:rects){
+        this.r_rect();
+        for(Rect r:tran_rects){
           r.draw();
         }
         return "PREBAR";
       }
+    }else if(state == "Pie_to_Bar"){
+      if(finish){
+        finish = false;
+        return "BAR";
+      }else{
+        this.grow();
+        for(Rect r:tran_rects){
+          r.draw();
+        }
+        return "Pie_to_Bar";
+      }
     }
     return state;
+  }
+  //void to_line(){
+  //  for(Rect r:rects){
+  //    if(r.wid <= 5){
+  //      r.wid = 5;
+  //      finish = true;
+  //    }else{
+  //      r.x = r.x + 1;
+  //      r.wid = r.wid - 2;
+  //    }
+  //  }
+  //}
+  
+  void r_rect(){
+    boolean rec = false;
+    for(Rect r:tran_rects){
+      if(r.wid >= width_bar){
+        r.wid = width_bar;
+        rec = true;
+      }else{
+        r.x -= 1;
+        r.wid += 2;
+      }
+    }
+    if(rec){
+      this.grow();
+    }
   }
   void grow(){
     int j=0;
     int all_grown=0;
-    for(Rect r:rects){
-      if(-r.hgt >= int(r.data)){
-        r.hgt = -int(r.data);
+    for(Rect r:tran_rects){
+      if(r.y >= rects.get(j).y){
+        r.hgt = rects.get(j).hgt;
+        r.y = rects.get(j).y;
         all_grown++;
       }else{
         r.y = r.y + hgt_reduce[j];
@@ -83,7 +150,7 @@ class Bar_char{
       }
       j++;
     }
-    if(all_grown == rects.size()){
+    if(all_grown == tran_rects.size()){
       finish = true;
     }
   }
@@ -92,7 +159,7 @@ class Bar_char{
     int all_shrinked = 0;
     for(Rect r:rects){
       if(r.hgt >= -5){
-        //r.y = height-y_frame -10;
+        //r.y = r.y+5;
         r.hgt = -5;
         all_shrinked++;
       }else{     

@@ -4,12 +4,14 @@ String[] names;
 float[] values;
 int X_range;
 float Y_range = 0;
+float total = 0;
 float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
 Line_char linec;
+Pie_char piec;
 Button buttons;
-String state = "BAR";
+String state = "PIE";
 
 void setup(){
   frameRate(10);
@@ -26,10 +28,13 @@ void setup(){
     if(Y_range < values[i-1]){
       Y_range = values[i-1];
     }
+    total += values[i-1];
   }
   barc = new Bar_char(names, values);
   linec = new Line_char(names, values);
+  piec = new Pie_char(names, values);
   buttons  = new Button();
+  barc.arrange();piec.arrange();
 }
 
 void axis(){
@@ -78,33 +83,43 @@ void draw(){
   barc.gap = 0.35*0.8*canvas1_w/names.length;
   fill(255);
   rect(0, 0, canvas1_w, height);
-  axis();
+
+  //if(!(state == "PIE" || state == "PREPIE")){
+  if(state != "PIE"){
+    axis();
+  }
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
   buttons.bdraw();
   state = barc.b_draw(state);
-  state = linec.l_draw(state);
+  //state = linec.l_draw(state);
+  state = piec.p_draw(state);
+
 }
 
 void mouseClicked(){
   String next = buttons.buttonClicked();
 
   if(state == "BAR"){
+    barc.arrange();piec.arrange();
     if(next == "LINE"){
       state = "Bar_to_Line";
     }else if(next == "PIE"){
       state = "Bar_to_Pie";
     }
   }else if(state == "LINE"){
+    barc.arrange();piec.arrange();
     if(next == "BAR"){
       state = "Line_to_Bar";
     }else if(next == "PIE"){
       state = "Line_to_Pie";
     }
   }else if(state == "PIE"){
+    barc.arrange();piec.arrange();
     if(next == "BAR"){
       state = "Pie_to_Bar";
     }else if(next == "LINE"){
       state = "Pie_to_Line";
     }
   }
+  println(state,"++++++");
 }
