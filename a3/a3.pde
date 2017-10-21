@@ -91,7 +91,7 @@ void draw(){
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
   buttons.bdraw();
   state = barc.b_draw(state);
-  //state = linec.l_draw(state);
+  state = linec.l_draw(state);
   state = piec.p_draw(state);
 
 }
@@ -111,7 +111,7 @@ void mouseClicked(){
     if(next == "BAR"){
       state = "Line_to_Bar";
     }else if(next == "PIE"){
-      state = "Line_to_Pie";
+      state = "PREPIE";
     }
   }else if(state == "PIE"){
     barc.arrange();piec.arrange();

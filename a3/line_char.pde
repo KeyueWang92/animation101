@@ -61,18 +61,25 @@ class Line_char{
         this.fade();
         return "Line_to_Bar";
       }
-    }else if(state == "Line_to_Pie"){
+    }else if(state == "PREPIE"){
       this.arrange();
       if(this.finish){
         i = 30;
         finish = false;
-        return "PREPIE";
+        return "Line_to_Pie";
       }else{
         this.prepie();
+        return "PREPIE";
+      }
+    }else if(state == "Line_to_Pie"){
+      if (finish) {
+        finish = false;
+        return "PIE";
+      }
+      else {
+        this.shrink();
         return "Line_to_Pie";
       }
-    }else if(state == "PREPIE"){
-      this.shrink();
     }
     return state;
   }
@@ -142,15 +149,7 @@ class Line_char{
         lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
         (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
       i--;
-    }
-    else {
-      //for test
-      for (Line l: lines) {
-        l.draw_dot();
-      }
-      set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
-    }
+    } else finish = true;
   }
   
   void fade(){

@@ -14,7 +14,7 @@ class Bar_char{
     for(int i=0; i<names.length; i++){
 
       Rect r= new Rect(Float.toString(values[i]),names[i]);
-      Rect r1= new Rect(Integer.toString(values[i]),names[i]);
+      Rect r1= new Rect(Float.toString(values[i]),names[i]);
 
       rects.add(r);
       tran_rects.add(r1);
