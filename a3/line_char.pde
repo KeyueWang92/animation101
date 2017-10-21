@@ -2,13 +2,13 @@ class Line_char{
   float width_bar;
   float gap;
   String[] names;
-  int[] values;
+  float[] values;
   boolean finish = false;
   boolean growRect = false;
   float a,b = 0;
   int i = 0; 
   ArrayList<Line> lines = new ArrayList<Line>();
-  Line_char(String[] names, int[] values){
+  Line_char(String[] names, float[] values){
     this.names = names;
     this.values = values;
     for(int i=0; i<names.length - 1; i++){

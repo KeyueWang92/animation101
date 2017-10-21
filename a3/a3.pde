@@ -1,9 +1,9 @@
 String[] lines;
 String[] headers;
 String[] names;
-int[] values;
+float[] values;
 int X_range;
-int Y_range = 0;
+float Y_range = 0;
 float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
 Bar_char barc;
@@ -18,11 +18,11 @@ void setup(){
   lines = loadStrings("./data.csv");
   headers = split(lines[0], ",");
   names = new String[lines.length - 1];
-  values = new int[lines.length - 1];
+  values = new float[lines.length - 1];
   for(int i = 1; i < lines.length; i++){
     String[] data = split(lines[i], ",");
     names[i - 1] = data[0];
-    values[i - 1] = int(data[1]);
+    values[i - 1] = float(data[1]);
     if(Y_range < values[i-1]){
       Y_range = values[i-1];
     }
