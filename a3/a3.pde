@@ -33,7 +33,6 @@ void setup(){
 }
 
 void axis(){
-  println("axis");
   stroke(0);
   textAlign(LEFT);
   textSize(12);

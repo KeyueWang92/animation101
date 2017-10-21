@@ -6,6 +6,7 @@ class Line_char{
   boolean finish = false;
   boolean growRect = false;
   float a,b = 0;
+  int i = 0; 
   ArrayList<Line> lines = new ArrayList<Line>();
   Line_char(String[] names, int[] values){
     this.names = names;
@@ -30,7 +31,6 @@ class Line_char{
   }
  
   String l_draw(String state){
-    
     if(state == "PRELINE"){
       this.arrange();
       if (lines.get(0).c1 != 75) {
@@ -60,6 +60,18 @@ class Line_char{
         this.fade();
         return "Line_to_Bar";
       }
+    }else if(state == "Line_to_Pie"){
+      this.arrange();
+      if(this.finish){
+        i = 30;
+        finish = false;
+        return "PREPIE";
+      }else{
+        this.prepie();
+        return "Line_to_Pie";
+      }
+    }else if(state == "PREPIE"){
+      this.shrink();
     }
     return state;
   }
@@ -72,6 +84,57 @@ class Line_char{
       l.draw_dot();
     }
     ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
+  }
+  
+  void prepie() {
+    //from line to dot
+    if (this.lines.get(0).c1 < 255) {
+      for (Line l: lines) {
+        l.c1 = l.c1+6;
+        l.c2 = l.c2+4;
+        l.draw();
+        l.draw_dot();
+      }
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+    } 
+    //from dot to vertical line
+    else {
+      if (i <= 30) {
+        for (Line l: lines) {
+          l.draw_dot();
+          line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+        }
+        i++;
+        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      }
+      else if (i <= 45) {
+        for (Line l: lines) {
+          l.draw_dot();
+          line(l.x1,l.y1,l.x1, l.y1 + (0.9 * height - l.y1));
+        }
+        i++;
+        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      }
+      else finish = true;
+    }
+  }
+  
+  void shrink(){
+    if (i >= 0) {
+      for (Line l: lines) {
+        l.draw_dot();
+        line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+      }
+      i--;
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+    }
+    else {
+      //for test
+      for (Line l: lines) {
+        l.draw_dot();
+      }
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+    }
   }
   
   void fade(){
