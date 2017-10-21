@@ -50,6 +50,7 @@ class Line_char{
         l.draw();
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
       return "LINE";
     }else if(state == "Line_to_Bar"){
@@ -83,6 +84,7 @@ class Line_char{
       l.draw();
       l.draw_dot();
     }
+    set_last_color();
     ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
   }
   
@@ -95,6 +97,7 @@ class Line_char{
         l.draw();
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } 
     //from dot to vertical line
@@ -104,16 +107,24 @@ class Line_char{
           l.draw_dot();
           line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
         }
-        i++;
+        set_last_color();
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
+        i++;
       }
       else if (i <= 45) {
         for (Line l: lines) {
           l.draw_dot();
           line(l.x1,l.y1,l.x1, l.y1 + (0.9 * height - l.y1));
         }
-        i++;
+        set_last_color();
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2));
+        i++;
       }
       else finish = true;
     }
@@ -125,14 +136,19 @@ class Line_char{
         l.draw_dot();
         line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
       }
-      i--;
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
+      i--;
     }
     else {
       //for test
       for (Line l: lines) {
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     }
   }
@@ -145,6 +161,7 @@ class Line_char{
         l.draw();
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } else {
       if (a <= 2.5) {
@@ -152,6 +169,7 @@ class Line_char{
           l.draw_dot();
           l.y += 0.5;
         }
+        set_last_color();
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
         a += 0.5;
       } else {
@@ -159,9 +177,18 @@ class Line_char{
         for (Line l: lines) {
           rect(l.x1-2.5,l.y1,5,5);
         }
+        set_last_color();
         rect(lines.get(lines.size()-1).x2-2.5, lines.get(lines.size()-1).y2, 5, 5);
         finish = true;
       }
     } 
   }
+  
+  void set_last_color(){
+    Line l = lines.get(lines.size()-1);
+    color c = l.choose_color(Float.toString(l.value2));
+    stroke(c);
+    fill(c);
+  }
+
 }
