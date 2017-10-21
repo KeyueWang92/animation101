@@ -2,12 +2,13 @@ class Line_char{
   float width_bar;
   float gap;
   String[] names;
-  int[] values;
+  float[] values;
   boolean finish = false;
   boolean growRect = false;
   float a,b = 0;
+  int i = 0; 
   ArrayList<Line> lines = new ArrayList<Line>();
-  Line_char(String[] names, int[] values){
+  Line_char(String[] names, float[] values){
     this.names = names;
     this.values = values;
     for(int i=0; i<names.length - 1; i++){
@@ -30,7 +31,6 @@ class Line_char{
   }
  
   String l_draw(String state){
-    
     if(state == "PRELINE"){
       this.arrange();
       if (lines.get(0).c1 != 75) {
@@ -50,6 +50,7 @@ class Line_char{
         l.draw();
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
       return "LINE";
     }else if(state == "Line_to_Bar"){
@@ -59,6 +60,25 @@ class Line_char{
       }else{
         this.fade();
         return "Line_to_Bar";
+      }
+    }else if(state == "PREPIE"){
+      this.arrange();
+      if(this.finish){
+        i = 30;
+        finish = false;
+        return "Line_to_Pie";
+      }else{
+        this.prepie();
+        return "PREPIE";
+      }
+    }else if(state == "Line_to_Pie"){
+      if (finish) {
+        finish = false;
+        return "PIE";
+      }
+      else {
+        this.shrink();
+        return "Line_to_Pie";
       }
     }
     return state;
@@ -71,7 +91,65 @@ class Line_char{
       l.draw();
       l.draw_dot();
     }
+    set_last_color();
     ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
+  }
+  
+  void prepie() {
+    //from line to dot
+    if (this.lines.get(0).c1 < 255) {
+      for (Line l: lines) {
+        l.c1 = l.c1+6;
+        l.c2 = l.c2+4;
+        l.draw();
+        l.draw_dot();
+      }
+      set_last_color();
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+    } 
+    //from dot to vertical line
+    else {
+      if (i <= 30) {
+        for (Line l: lines) {
+          l.draw_dot();
+          line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+        }
+        set_last_color();
+        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
+        i++;
+      }
+      else if (i <= 45) {
+        for (Line l: lines) {
+          l.draw_dot();
+          line(l.x1,l.y1,l.x1, l.y1 + (0.9 * height - l.y1));
+        }
+        set_last_color();
+        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2));
+        i++;
+      }
+      else finish = true;
+    }
+  }
+  
+  void shrink(){
+    if (i >= 0) {
+      for (Line l: lines) {
+        l.draw_dot();
+        line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+      }
+      set_last_color();
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
+        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
+      i--;
+    } else finish = true;
   }
   
   void fade(){
@@ -82,6 +160,7 @@ class Line_char{
         l.draw();
         l.draw_dot();
       }
+      set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } else {
       if (a <= 2.5) {
@@ -89,6 +168,7 @@ class Line_char{
           l.draw_dot();
           l.y += 0.5;
         }
+        set_last_color();
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
         a += 0.5;
       } else {
@@ -96,9 +176,18 @@ class Line_char{
         for (Line l: lines) {
           rect(l.x1-2.5,l.y1,5,5);
         }
+        set_last_color();
         rect(lines.get(lines.size()-1).x2-2.5, lines.get(lines.size()-1).y2, 5, 5);
         finish = true;
       }
     } 
   }
+  
+  void set_last_color(){
+    Line l = lines.get(lines.size()-1);
+    color c = l.choose_color(Float.toString(l.value2));
+    stroke(c);
+    fill(c);
+  }
+
 }

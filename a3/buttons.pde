@@ -13,23 +13,41 @@ class Button{
   }
   void bdraw(){
     //button 1
-    fill(255,0,0);
+    if (mouseX >= x && mouseX <= (x + wid) && mouseY >= y && mouseY < (y+hgt)) {
+      stroke(200,160,200);
+      fill(140,160,200);
+    } else {
+    stroke(170,200,240);
+    fill(170,200,240);
+    }
     rect(x, y, wid, hgt);
     textAlign(CENTER, CENTER);
-    fill(0,255,0);
+    fill(255,255,255);
     textSize(26); 
     text(text[0], x+wid/2,y+hgt/2);
     
     //button 2
-    fill(0,255,0);
+    if (mouseX >= x && mouseX <= (x + wid) && mouseY >= (y+hgt) && mouseY < (y+2*hgt)) {
+      stroke(140,160,200);
+      fill(140,160,200);
+    } else {
+    stroke(170,200,240);
+    fill(170,200,240);
+    }
     rect(x, y+hgt, wid, hgt);
-    fill(255,0,0);
+    fill(255,255,255);
     text(text[1], x+wid/2,y+hgt+hgt/2);
     
     //button 3
-    fill(0,0,255);
+    if (mouseX >= x && mouseX <= (x + wid) && mouseY >= (y+2*hgt) && mouseY < (y+3*hgt)) {
+      stroke(140,160,200);
+      fill(140,160,200);
+    } else {
+    stroke(170,200,240);
+    fill(170,200,240);
+    }
     rect(x, y+2*hgt, wid, hgt);
-    fill(0,255,0);
+    fill(255,255,255);
     text(text[2], x+wid/2,y+2*hgt+hgt/2);
   }
   

@@ -2,18 +2,20 @@ class Bar_char{
   float width_bar;
   float gap;
   String[] names;
-  int[] values;
+  float[] values;
   ArrayList<Rect> rects = new ArrayList<Rect>();
   ArrayList<Rect> tran_rects = new ArrayList<Rect>();
   boolean finish = false;
   float[] hgt_reduce;
   
-  Bar_char(String[] names, int[] values){
+  Bar_char(String[] names, float[] values){
     this.names = names;
     this.values = values;
     for(int i=0; i<names.length; i++){
-      Rect r= new Rect(Integer.toString(values[i]),names[i]);
-      Rect r1= new Rect(Integer.toString(values[i]),names[i]);
+
+      Rect r= new Rect(Float.toString(values[i]),names[i]);
+      Rect r1= new Rect(Float.toString(values[i]),names[i]);
+
       rects.add(r);
       tran_rects.add(r1);
     }

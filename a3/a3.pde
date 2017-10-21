@@ -1,9 +1,9 @@
 String[] lines;
 String[] headers;
 String[] names;
-int[] values;
+float[] values;
 int X_range;
-int Y_range = 0;
+float Y_range = 0;
 float total = 0;
 float x_frame, y_frame, canvas1_w, canvas2_w;
 float y_len, y_gap;
@@ -20,11 +20,11 @@ void setup(){
   lines = loadStrings("./data.csv");
   headers = split(lines[0], ",");
   names = new String[lines.length - 1];
-  values = new int[lines.length - 1];
+  values = new float[lines.length - 1];
   for(int i = 1; i < lines.length; i++){
     String[] data = split(lines[i], ",");
     names[i - 1] = data[0];
-    values[i - 1] = int(data[1]);
+    values[i - 1] = float(data[1]);
     if(Y_range < values[i-1]){
       Y_range = values[i-1];
     }
@@ -38,7 +38,6 @@ void setup(){
 }
 
 void axis(){
-  println("axis");
   stroke(0);
   textAlign(LEFT);
   textSize(12);
@@ -92,7 +91,7 @@ void draw(){
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);
   buttons.bdraw();
   state = barc.b_draw(state);
-  //state = linec.l_draw(state);
+  state = linec.l_draw(state);
   state = piec.p_draw(state);
 
 }
@@ -112,7 +111,7 @@ void mouseClicked(){
     if(next == "BAR"){
       state = "Line_to_Bar";
     }else if(next == "PIE"){
-      state = "Line_to_Pie";
+      state = "PREPIE";
     }
   }else if(state == "PIE"){
     barc.arrange();piec.arrange();
