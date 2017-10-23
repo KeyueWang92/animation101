@@ -1,0 +1,3 @@
+-- Besides all the basic requiements (bar <-> line, bar<-> pie) we also implemented line-chart <-> pie-chart, which means all the three charts can transit from one to another.
+-- Also, we set the color for each chart based on the temperature (hot -> red, cold -> blue).
+-- And highlight feature is available for users all the time.

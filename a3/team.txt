@@ -1,0 +1,2 @@
+Keyue Wang: did the line-chart, some of the transitions and the polish(set the color etc.)
+Ning Zhu: did the bar-chart, pie-chart, some of the transitions.
