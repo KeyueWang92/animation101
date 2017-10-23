@@ -14,9 +14,17 @@ class Line{
   }
   
   void draw_dot(){
+    if (!mouse_in()) {
     c = choose_color(Float.toString(value1));
     stroke(c);
     fill(c);
+    } else {
+      stroke(0,0,255);
+      fill(0,0,255);
+      textSize(13);
+      textAlign(CENTER, CENTER);
+      text(""+value1,mouseX,mouseY);
+    }
     ellipse(x,y,5,5);
   }
   
@@ -43,5 +51,11 @@ class Line{
       c = color(0,0,255-i);
     } else c = color(255,255,255);
     return c;
+  }
+  
+  public boolean mouse_in(){
+    if (mouseX >= x1 - 10 && mouseX <= x1 + 10 && mouseY >= y1 - 10 && mouseY <= y1 + 10)
+    return true;
+    else return false;
   }
 }

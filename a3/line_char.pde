@@ -52,7 +52,15 @@ class Line_char{
         l.draw_dot();
       }
       set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
+      if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        }
+      else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
       return "LINE";
     }else if(state == "Line_to_Bar"){
       if(this.finish){
@@ -110,7 +118,15 @@ class Line_char{
       l.draw_dot();
     }
     set_last_color();
-    ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
+    if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        }
+    else  ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
   }
   
   void prepie() {
@@ -123,7 +139,15 @@ class Line_char{
         l.draw_dot();
       }
       set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        }
+      else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } 
     //from dot to vertical line
     else {
@@ -133,7 +157,15 @@ class Line_char{
           line(l.x1,l.y1,l.x1,l.y1 + (0.9 * height - l.y1) * i/20);
         }
         set_last_color();
-        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        } else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+        
         line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
         lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
         (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
@@ -150,7 +182,14 @@ class Line_char{
         line(l.x1,l.y1,l.x1,l.y1 + (0.9 * height - l.y1) * i/20);
       }
       set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        } else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
       line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
         lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
         (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
@@ -167,7 +206,14 @@ class Line_char{
         line(l.x1,0.9*height,l.x1,0.9*height - (0.9 * height - l.y1) * i/20);
       }
       set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        } else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
       line(lines.get(lines.size()-1).x2,0.9*height,
         lines.get(lines.size()-1).x2,0.9*height- 
         (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
@@ -185,7 +231,14 @@ class Line_char{
         l.draw_dot();
       }
       set_last_color();
-      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        } else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
     } else {
       if (a <= 2.5) {
         for (Line l: lines) {
@@ -193,7 +246,14 @@ class Line_char{
           l.y += 0.5;
         }
         set_last_color();
-        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
+        if (mouseX >= lines.get(lines.size()-1).x2 - 10 && mouseX <= lines.get(lines.size()-1).x2 + 10 
+        && mouseY >= lines.get(lines.size()-1).y2 - 10 && mouseY <= lines.get(lines.size()-1).y2 + 10){
+        stroke(0,0,255);
+        fill(0,0,255);
+        textSize(13);
+        textAlign(CENTER, CENTER);
+        text(""+lines.get(lines.size()-1).value2,mouseX,mouseY);
+        } else ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2+a, 5, 5);
         a += 0.5;
       } else {
         fill(75,150,255);
@@ -213,5 +273,4 @@ class Line_char{
     stroke(c);
     fill(c);
   }
-
 }
