@@ -1,9 +1,12 @@
 class Slice{
   float x, y, value;
+  String x_label;
   float wid, hgt, start, end;
   color c;
+  boolean show_data;
   
-  Slice(float value){  
+  Slice(String label, float value){  
+    this.x_label = label;
     this.value = value;
     c = choose_color(Float.toString(value));
   }
@@ -30,13 +33,18 @@ class Slice{
     if(mode == PIE && !mouse_in()){
       stroke(255);
       fill(c);
+      this.show_data = false;
     }else if(mode == PIE && mouse_in()){
       stroke(230,230,255);
       fill(230,230,255);
+      this.show_data = true;     
     }else{
+      this.show_data = false;
       noFill();
+      strokeWeight(10);
     }
     arc(x, y, wid, hgt, start, end, mode);
+    strokeWeight(1);
   }
   
   color choose_color(String data) {

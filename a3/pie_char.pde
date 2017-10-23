@@ -27,8 +27,8 @@ class Pie_char{
     circle_dia = dia;
     arc_reduce = new float[names.length];
     for(int i=0; i<values.length;i++){      
-      Slice s = new Slice(values[i]);
-      Slice s1 = new Slice(values[i]);
+      Slice s = new Slice(names[i],values[i]);
+      Slice s1 = new Slice(names[i],values[i]);
       slices.add(s);
       ss.add(s1);
       arc_reduce[i] = values[i]*ratio/30;
@@ -60,6 +60,15 @@ class Pie_char{
       this.arrange();
       for(Slice s:slices){
         s.draw(PIE);
+      }
+      for(Slice s:slices){
+          if(s.show_data){
+            fill(0);
+            textSize(13);
+            textAlign(CENTER, CENTER);
+            text("Temp: "+s.value, mouseX, mouseY);
+            text("Time: "+s.x_label, mouseX, mouseY+15);
+          }
       }
       if (circle_faded == false) draw_circle();
       return "PIE";
