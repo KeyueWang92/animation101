@@ -43,6 +43,7 @@ class Line_char{
     }
     else if(state == "LINE"){
       this.arrange();
+      i = 0;
       for(Line l:this.lines){
         l.c1 = 75;
         l.c2 = 150;
@@ -64,7 +65,7 @@ class Line_char{
     }else if(state == "PREPIE"){
       this.arrange();
       if(this.finish){
-        i = 30;
+        i = 20;
         finish = false;
         return "Line_to_Pie";
       }else{
@@ -79,6 +80,23 @@ class Line_char{
       else {
         this.shrink();
         return "Line_to_Pie";
+      }
+    }else if(state == "Pie_to_Line"){
+      this.arrange();
+      if(finish){
+        finish = false;
+        return "pie_PRELINE";
+      }else{
+        this.grow();
+        return "Pie_to_Line";
+      }
+    }else if(state == "pie_PRELINE"){
+      if(finish){
+        finish = false;
+        return "PRELINE";
+      }else{
+        this.shrink();
+        return "pie_PRELINE";
       }
     }
     return state;
@@ -109,28 +127,16 @@ class Line_char{
     } 
     //from dot to vertical line
     else {
-      if (i <= 30) {
+      if (i <= 20) {
         for (Line l: lines) {
           l.draw_dot();
-          line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+          line(l.x1,l.y1,l.x1,l.y1 + (0.9 * height - l.y1) * i/20);
         }
         set_last_color();
         ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
         line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
         lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
-        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
-        i++;
-      }
-      else if (i <= 45) {
-        for (Line l: lines) {
-          l.draw_dot();
-          line(l.x1,l.y1,l.x1, l.y1 + (0.9 * height - l.y1));
-        }
-        set_last_color();
-        ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
-        line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
-        lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
-        (0.9 * height - lines.get(lines.size()-1).y2));
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
         i++;
       }
       else finish = true;
@@ -141,15 +147,33 @@ class Line_char{
     if (i >= 0) {
       for (Line l: lines) {
         l.draw_dot();
-        line(l.x1,l.y1,l.x1,l.y1+ (0.9 * height - l.y1) * i/30);
+        line(l.x1,l.y1,l.x1,l.y1 + (0.9 * height - l.y1) * i/20);
       }
       set_last_color();
       ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
       line(lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2,
         lines.get(lines.size()-1).x2,lines.get(lines.size()-1).y2+ 
-        (0.9 * height - lines.get(lines.size()-1).y2) * i/30);
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
       i--;
-    } else finish = true;
+    }
+      else finish = true;
+    
+  }
+  
+  void grow(){
+    if (i <= 20) {
+      for (Line l: lines) {
+        l.draw_dot();
+        line(l.x1,0.9*height,l.x1,0.9*height - (0.9 * height - l.y1) * i/20);
+      }
+      set_last_color();
+      ellipse(lines.get(lines.size()-1).x2, lines.get(lines.size()-1).y2, 5, 5);
+      line(lines.get(lines.size()-1).x2,0.9*height,
+        lines.get(lines.size()-1).x2,0.9*height- 
+        (0.9 * height - lines.get(lines.size()-1).y2) * i/20);
+      i++;
+    }
+      else finish = true;
   }
   
   void fade(){

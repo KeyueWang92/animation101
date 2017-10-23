@@ -11,13 +11,13 @@ Bar_char barc;
 Line_char linec;
 Pie_char piec;
 Button buttons;
-String state = "PIE";
+String state = "BAR";
 
 void setup(){
   frameRate(10);
   size(1000,600);
   surface.setResizable(true);
-  lines = loadStrings("./data.csv");
+  lines = loadStrings("./data2.csv");
   headers = split(lines[0], ",");
   names = new String[lines.length - 1];
   values = new float[lines.length - 1];
@@ -81,11 +81,12 @@ void draw(){
   y_gap = 10*y_len/Y_range;
   barc.width_bar = 0.65*0.8*canvas1_w/names.length;
   barc.gap = 0.35*0.8*canvas1_w/names.length;
+  stroke(255);
   fill(255);
   rect(0, 0, canvas1_w, height);
 
   //if(!(state == "PIE" || state == "PREPIE")){
-  if(state != "PIE"){
+  if(state != "Pre_Pie_to_Bar" && state != "Pre_Pie_to_Line" && state != "PIE"){
     axis();
   }
   buttons.setLoc(canvas1_w, 0, canvas2_w, height/3);

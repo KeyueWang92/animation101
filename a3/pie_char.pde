@@ -10,6 +10,8 @@ class Pie_char{
   ArrayList<Slice> ss = new ArrayList<Slice>();
   boolean finish = false;
   float[] arc_reduce;
+  boolean circle_faded = false;
+  float circle_dia;
   
   Pie_char(String[] names, float[] values){
     this.names = names;
@@ -22,6 +24,7 @@ class Pie_char{
       dia = 0.8*width/2;
     }
     ratio = 2*PI/total;
+    circle_dia = dia;
     arc_reduce = new float[names.length];
     for(int i=0; i<values.length;i++){      
       Slice s = new Slice(values[i]);
@@ -58,12 +61,25 @@ class Pie_char{
       for(Slice s:slices){
         s.draw(PIE);
       }
+      if (circle_faded == false) draw_circle();
       return "PIE";
-    }else if(state == "Pie_to_Bar"){
+    }else if(state == "Pre_Pie_to_Bar" && circle_faded == true){
+        for(Slice s:slices){
+          s.draw(PIE);
+        }
+        draw_circle();
+        return "Pre_Pie_to_Bar";
+    }else if(state == "Pre_Pie_to_Bar" && circle_faded == false){
+        return "Pie_to_Bar";
+    }
+    else if(state == "Pie_to_Bar"){
       if(finish){
         finish = false;
         return "BAR";
-      }else{
+      }else if(circle_faded == true && state == "Pie_to_Bar"){
+        return "Pre_Pie_to_Bar";
+      }
+      else{
         this.fade();
         for(Slice s:slices){
           s.draw(0);
@@ -84,6 +100,7 @@ class Pie_char{
     }else if(state == "Line_to_Pie"){
       if(finish){
         finish = false;
+        circle_dia = 300;
         return "PIE";
       }else{
         this.grow();
@@ -92,9 +109,30 @@ class Pie_char{
         }
         return "Line_to_Pie";
       }
+    }else if(state == "Pre_Pie_to_Line" && circle_faded == true){
+        for(Slice s:slices){
+          s.draw(PIE);
+        }
+        draw_circle();
+        return "Pre_Pie_to_Line";
+    }else if(state == "Pre_Pie_to_Line" && circle_faded == false){
+        return "Pie_to_Line";
     }
-    else if(state == "bar_PREPIE"){
-      
+    else if(state == "Pie_to_Line"){
+      if(finish){
+        finish = false;
+        return "Line";
+      }else if(circle_faded == true && state == "Pie_to_Line"){
+        return "Pre_Pie_to_Line";
+      }
+      else{
+        //this.arrange();
+        this.fade();
+        for(Slice s:slices){
+          s.draw(0);
+        }
+        return "Pie_to_Line";
+      }
     }
     return state;
   }
@@ -121,7 +159,6 @@ class Pie_char{
         s.end = slices.get(j).end;
         all_finish++;
       }else{
-        println(j,"------");
         s.end += arc_reduce[j];
       }
       j++;
@@ -130,4 +167,24 @@ class Pie_char{
       finish = true;
     }
   }  
+  
+  void draw_circle(){
+    if(circle_dia >= 300){
+      circle_faded = false;
+    }
+    if(circle_dia <= 0){
+      circle_faded = true;
+    }
+    if (circle_faded == false){
+      stroke(255);
+      fill(255);
+      ellipse(x,y,circle_dia,circle_dia);
+      circle_dia = circle_dia - 20;
+    }else if (circle_faded == true){
+      stroke(255);
+      fill(255);
+      ellipse(x,y,circle_dia,circle_dia);
+      circle_dia = circle_dia + 20;
+    }
+  }
 }

@@ -80,7 +80,6 @@ class Bar_char{
         for(Rect r:barc.rects){
           r.draw();
         }
-        //this.to_line();
         this.fade();
         return "Bar_to_Pie";
       }
