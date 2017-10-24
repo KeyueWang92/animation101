@@ -64,11 +64,11 @@ void axis(){
   
   line(x_frame, height-y_frame, x_frame, temp);
   // add the x-y-labels
-  fill(25,25,112); text(headers[0], canvas1_w/2, height*0.99);
+  fill(25,25,112); text(headers[0]+" Time", canvas1_w/2, height*0.99);
   pushMatrix();
   translate(0.025*canvas1_w, 0.5*height);
   rotate(radians(270));
-  text(headers[1], 0,0);
+  text("Temperature "+headers[1], 0,0);
   popMatrix(); 
 }
 
@@ -117,9 +117,9 @@ void mouseClicked(){
   }else if(state == "PIE"){
     barc.arrange();piec.arrange();
     if(next == "BAR"){
-      state = "Pie_to_Bar";
+      state = "Pre_Pie_to_Bar";
     }else if(next == "LINE"){
-      state = "Pie_to_Line";
+      state = "Pre_Pie_to_Line";
     }
   }
   println(state,"++++++");
